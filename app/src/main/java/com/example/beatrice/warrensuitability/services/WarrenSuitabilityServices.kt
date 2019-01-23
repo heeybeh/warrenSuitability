@@ -61,9 +61,11 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
 
                     if (response.isSuccessful()) {
 
-                    } else {
+                         val message = MessageModel()
 
-                    }
+
+
+                    } else { }
                 }
 
                 override fun onFailure(call: Call<MessageModel>, t: Throwable) {

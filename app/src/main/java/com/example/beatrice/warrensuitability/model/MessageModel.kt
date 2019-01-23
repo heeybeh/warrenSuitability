@@ -9,17 +9,14 @@ class MessageModel  {
     var id: String? = null
 
     @SerializedName("messages")
-    private var messagesDTO: ArrayList<MessagesDTO>? = null
+    var messagesDTO: ArrayList<MessagesDTO>? = null
 
     @SerializedName("buttons")
-    private var buttonsArray: ArrayList<String>? = null
+    var buttonsArray: ArrayList<String>? = null
 
     @SerializedName("inputs")
-    private var inputsDTO: ArrayList<InpustDTO>? = null
+    var inputsDTO: ArrayList<InpustDTO>? = null
 
     @SerializedName("responses")
-    private var responsesArray: ArrayList<String>? = null
-
-
-
+    var responsesArray: ArrayList<String>? = null
 }
