@@ -3,6 +3,7 @@ package com.example.beatrice.warrensuitability.services
 import android.content.Context
 import android.util.Log
 import com.example.beatrice.warrensuitability.interfaces.MessageInterface
+import com.example.beatrice.warrensuitability.interfaces.ResponseMessageInterface
 import com.example.beatrice.warrensuitability.interfaces.WarrenSuitabilityInterface
 import com.example.beatrice.warrensuitability.model.MessageModel
 import com.example.beatrice.warrensuitability.utils.HeaderInterceptor
@@ -12,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import com.example.beatrice.warrensuitability.utils.Constants.URL_BASE
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -39,6 +41,7 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
                 .build()
     }
 
+
     override fun postMessage(context: Context) {
 
         this.initRequest()
@@ -60,8 +63,6 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
                 override fun onResponse(call: Call<MessageModel>, response: Response<MessageModel>) {
 
                     if (response.isSuccessful()) {
-
-                         val message = MessageModel()
 
 
 
