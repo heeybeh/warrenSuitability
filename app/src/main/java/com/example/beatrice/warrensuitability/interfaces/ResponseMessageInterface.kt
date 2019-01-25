@@ -4,6 +4,6 @@ import com.example.beatrice.warrensuitability.model.MessageModel
 
 interface ResponseMessageInterface {
 
-    fun success(notes: List<MessageModel>)
+    fun success(notes: MessageModel)
 
 }

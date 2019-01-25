@@ -1,5 +1,6 @@
 package com.example.beatrice.warrensuitability.services
 
+import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.util.Log
 import com.example.beatrice.warrensuitability.interfaces.MessageInterface
@@ -12,13 +13,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import com.example.beatrice.warrensuitability.utils.Constants.URL_BASE
+import com.example.beatrice.warrensuitability.utils.ServiceResult
 import okhttp3.RequestBody
-import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 class WarrenSuitabilityServices : WarrenSuitabilityInterface {
 
@@ -42,7 +44,9 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
     }
 
 
-    override fun postMessage(context: Context) {
+    override fun postMessage(context: Context): MutableLiveData<ServiceResult> {
+
+        val mutableDataServiceResult = MutableLiveData<ServiceResult>()
 
         this.initRequest()
 
@@ -57,6 +61,7 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
             val service = retrofit?.create<MessageInterface>(MessageInterface::class.java!!)
 
             val call = service?.postMessage(body)
+            var mess : MessageModel?
 
             call?.enqueue(object : Callback<MessageModel> {
 
@@ -64,9 +69,16 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
 
                     if (response.isSuccessful()) {
 
+                        mess = response?.body()
+
+                        val serviceResult = ServiceResult(0, mess)
+
+                        mutableDataServiceResult.setValue(serviceResult)
+
+                    } else {
 
 
-                    } else { }
+                    }
                 }
 
                 override fun onFailure(call: Call<MessageModel>, t: Throwable) {
@@ -76,9 +88,12 @@ class WarrenSuitabilityServices : WarrenSuitabilityInterface {
 
         } catch (e: JSONException) {
 
+
+
             e.printStackTrace()
         }
 
+        return mutableDataServiceResult
     }
 
 }

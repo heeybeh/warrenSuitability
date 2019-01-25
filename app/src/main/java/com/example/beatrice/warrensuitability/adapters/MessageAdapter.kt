@@ -12,35 +12,25 @@ import com.example.beatrice.warrensuitability.model.MessageModel
 import kotlinx.android.synthetic.main.message_item.view.*
 
 
-class MessageAdapter(private val messages: List<MessageModel>, private val context: Context ) : Adapter<MessageAdapter.ViewHolder>() {
+class MessageAdapter(private val messages: List<MessageModel>, private val context: Context ) : RecyclerView.Adapter<MessageHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.message_item, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageHolder {
+        val itemView = LayoutInflater.from(context).inflate(R.layout.message_item, parent, false)
+
+        return MessageHolder(itemView)
     }
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val mg = messages[position]
-
-        holder.let {
-            it.bindView(mg)
-
+    override fun onBindViewHolder(holder: MessageHolder, position: Int) {
+        for (i in 0 until messages[position].messagesDTO!!.size) {
+            holder.txtMessage.text = messages[position].messagesDTO!![i].toString()
         }
+
+
     }
 
 
 
     override fun getItemCount(): Int {
         return messages.size
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bindView(mg: MessageModel) {
-
-            val textMessage = itemView.text_message
-
-         textMessage.text = mg.messagesDTO.toString()
-        }
     }
 }
